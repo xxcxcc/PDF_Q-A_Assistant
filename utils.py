@@ -55,4 +55,3 @@ def qa_agent(openai_api_key, memory, uploaded_file, question):
     response = qa.invoke({"chat_history": memory, "question": question})
 
     return response
-
