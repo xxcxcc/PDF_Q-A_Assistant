@@ -1,4 +1,4 @@
-from langchain.chains import ConversationalRetrivalChain
+from langchain.chains import ConversationalRetrievalChain
 from langchain_openai import ChatOpenAI
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.document_loaders import PyPDFLoader
@@ -49,7 +49,7 @@ def qa_agent(openai_api_key, memory, uploaded_file, question):
 
     # 设置检索器和对话链
     retriever = db.as_retriever()
-    qa = ConversationalRetrivalChain.from_llm(llm=model, retriever=retriever, memory=memory)
+    qa = ConversationalRetrievalChain.from_llm(llm=model, retriever=retriever, memory=memory)
 
     # 使用设定好的模型和检索器来回答问题
     response = qa.invoke({"chat_history": memory, "question": question})
