@@ -6,7 +6,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
-def qa_agent(openai_api_key, memory, uploaded_file, question):
+def qa_agent(api_key, memory, uploaded_file, question):
     """
     使用OpenAI API和PDF内容来回答问题的智能代理。
 
@@ -22,7 +22,7 @@ def qa_agent(openai_api_key, memory, uploaded_file, question):
 
     # 初始化OpenAI聊天模型
     model = ChatOpenAI(model_name="gpt-3.5-turbo",
-                       openai_api_key=openai_api_key,
+                       openai_api_key=api_key,
                        base_url="https://api.aigc369.com/v1")
 
     # 从上传的文件中读取内容
@@ -49,7 +49,9 @@ def qa_agent(openai_api_key, memory, uploaded_file, question):
 
     # 设置检索器和对话链
     retriever = db.as_retriever()
-    qa = ConversationalRetrievalChain.from_llm(llm=model, retriever=retriever, memory=memory)
+    qa = ConversationalRetrievalChain.from_llm(llm=model,
+                                               retriever=retriever,
+                                               memory=memory)
 
     # 使用设定好的模型和检索器来回答问题
     response = qa.invoke({"chat_history": memory, "question": question})
